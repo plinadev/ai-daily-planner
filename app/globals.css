@@ -1,26 +1,62 @@
+@import url("https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap");
 @import "tailwindcss";
+@plugin "daisyui";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@plugin "daisyui/theme" {
+  name: "lofi";
+  default: true;
+  prefersdark: false;
+  color-scheme: "light";
+  --color-brand-mint: #bcf8ec;
+  --color-brand-sky: #aed9e0;
+  --color-brand-slate: #9fa0c3;
+  --color-brand-mauve: #8b687f;
+  --color-brand-plum: #7b435b;
+  --color-base-100: oklch(100% 0 0);
+  --color-base-200: oklch(97% 0 0);
+  --color-base-300: oklch(93% 0 0);
+  --color-base-content: #1a1a2e;
+  --color-primary: #7b435b;
+  --color-primary-content: oklch(100% 0 0);
+  --color-secondary: #8b687f;
+  --color-secondary-content: oklch(100% 0 0);
+  --color-accent: #9fa0c3;
+  --color-accent-content: oklch(100% 0 0);
+  --color-neutral: #1a1a2e;
+  --color-neutral-content: oklch(100% 0 0);
+  --color-success: #bcf8ec;
+  --color-success-content: #1a1a2e;
+  --color-info: #aed9e0;
+  --color-info-content: #1a1a2e;
+  --color-warning: oklch(88.37% 0.135 79.94);
+  --color-warning-content: oklch(17.674% 0.027 79.94);
+  --color-error: oklch(78.66% 0.15 28.47);
+  --color-error-content: oklch(15.732% 0.03 28.47);
+  --radius-selector: 2rem;
+  --radius-field: 0.25rem;
+  --radius-box: 0.5rem;
+  --border: 1px;
+  --depth: 0;
+  --noise: 0;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+input:focus-visible {
+  outline: none;
 }
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+label:focus-within {
+  outline: none;
+}
+textarea:focus-visible {
+  outline: none;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: linear-gradient(
+    135deg,
+    #bcf8ec22 0%,
+    #aed9e022 40%,
+    #9fa0c322 100%
+  );
+  background-color: var(--color-base-200);
+  font-family: "DM Sans", sans-serif;
 }
