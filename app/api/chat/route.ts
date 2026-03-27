@@ -1,4 +1,4 @@
-// app/api/chat/route.ts
+import { Task } from "@/context/types";
 import { openai } from "@/lib/ai.config";
 import { convertToModelMessages, stepCountIs, streamText, tool } from "ai";
 import z from "zod";
@@ -32,7 +32,7 @@ const completeTaskTool = tool({
   }),
 });
 
-const makeGetTasksTool = (tasks: any[]) =>
+const makeGetTasksTool = (tasks: Task[]) =>
   tool({
     description: "Retrieve the user's tasks, optionally filtered by status",
     inputSchema: z.object({
@@ -54,7 +54,6 @@ const getTimeTool = tool({
 
 export async function POST(req: Request) {
   const { messages, tasks } = await req.json();
-  // const tasks = metadata?.tasks ?? [];
 
   const result = streamText({
     model: openai("gpt-4o-mini"),

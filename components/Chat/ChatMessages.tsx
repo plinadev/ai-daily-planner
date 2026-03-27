@@ -1,14 +1,19 @@
 import MessageItem from "./MessageItem";
 import EmptyChatAnimation from "./EmptyChatAnimation";
 import AnswerLoader from "./AnswerLoader";
+import { ChatStatus, UIMessage } from "ai";
 
-// ChatMessages.tsx
 export default function ChatMessages({
   messages,
   status,
   error,
   onSuggestion,
-}: any) {
+}: {
+  messages: UIMessage[];
+  status: ChatStatus;
+  error?: Error | null;
+  onSuggestion: (text: string) => void;
+}) {
   const isLoading = status === "submitted" || status === "streaming";
   const lastMessage = messages[messages.length - 1];
   const showStandaloneLoader = isLoading && lastMessage?.role === "user";
@@ -23,7 +28,7 @@ export default function ChatMessages({
 
   return (
     <div className="space-y-5 p-5 lg:w-[680px] lg:mx-auto">
-      {messages.map((m: any, index: number) => (
+      {messages.map((m, index: number) => (
         <MessageItem
           key={m.id}
           m={m}

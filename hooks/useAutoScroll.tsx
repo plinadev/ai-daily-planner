@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function useAutoScroll(deps: any[]) {
   const containerRef = useRef<HTMLDivElement>(null);
 

@@ -1,14 +1,18 @@
+import { AttachmentPreview } from "@/hooks/useAttachments";
 import { IoClose } from "react-icons/io5";
 
 export default function AttachmentPreviewList({
   attachments,
   removeAttachment,
-}: any) {
+}: {
+  attachments: AttachmentPreview[];
+  removeAttachment: (index: number) => void;
+}) {
   if (!attachments.length) return null;
 
   return (
     <div className="flex flex-wrap gap-2 mb-3 lg:w-[680px] w-full">
-      {attachments.map((a: any, i: number) => (
+      {attachments.map((a: AttachmentPreview, i: number) => (
         <div key={i} className="relative group">
           <img
             src={a.url}

@@ -1,5 +1,7 @@
 import { IoSend, IoAttach } from "react-icons/io5";
 import AttachmentPreviewList from "./AttachmentPreviewList";
+import { Dispatch, RefObject, SetStateAction } from "react";
+import { AttachmentPreview } from "@/hooks/useAttachments";
 
 export default function ChatInput({
   input,
@@ -11,7 +13,22 @@ export default function ChatInput({
   removeAttachment,
   fileInputRef,
   textareaRef,
-}: any) {
+}: {
+  input: string;
+  setInput: Dispatch<SetStateAction<string>>;
+
+  handleSend: (text?: string) => Promise<void> | void;
+
+  isLoading: boolean;
+
+  addFiles: (files: FileList | File[]) => void;
+
+  attachments: AttachmentPreview[];
+  removeAttachment: (index: number) => void;
+
+  fileInputRef: RefObject<HTMLInputElement | null>;
+  textareaRef: RefObject<HTMLTextAreaElement | null>;
+}) {
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
@@ -20,7 +37,12 @@ export default function ChatInput({
   };
 
   return (
-    <div className="flex flex-col p-4 border-t border-base-200 lg:items-center flex-shrink-0">
+    <div
+      className="flex flex-col p-4 border-t border-base-200 lg:items-center flex-shrink-0"
+      style={{
+        background: "linear-gradient(160deg, #faf9f7 0%, #f5f2f0 100%)",
+      }}
+    >
       <AttachmentPreviewList
         attachments={attachments}
         removeAttachment={removeAttachment}
@@ -61,8 +83,8 @@ export default function ChatInput({
           rows={1}
           className="textarea w-full min-h-[40px] max-h-[120px] resize-none rounded-lg text-[15px] leading-6 py-2 px-3"
           style={{
-            background: "#f8f8fc",
-            border: "1px solid #9fa0c333",
+            background: "rgba(255,255,255,0.85)",
+            border: `1px solid ${"#e8e2de"}`,
             color: "#1a1a2e",
           }}
         />

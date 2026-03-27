@@ -12,6 +12,7 @@ import ChatInput from "./ChatInput";
 import { useTasks } from "@/context/TasksContext";
 import { DefaultChatTransport } from "ai";
 import { Task } from "@/context/types";
+import { useToolActions } from "@/hooks/useToolActions";
 
 let latestTasks: Task[] = [];
 
@@ -52,34 +53,12 @@ export default function Chat() {
 
   const scrollRef = useAutoScroll([messages, status]);
 
-  useEffect(() => {
-    for (const message of messages) {
-      if (message.role !== "assistant") continue;
-
-      for (const part of message.parts ?? []) {
-        if (part.type !== "tool-addTask" && part.type !== "tool-completeTask")
-          continue;
-        if (part.state !== "output-available") continue;
-
-        const result = (part as any).output;
-
-        if (part.type === "tool-addTask" && result?.action === "add") {
-          const exists = tasks.some((t) => t.title === result.task.title);
-          if (!exists) addTask(result.task);
-        }
-
-        if (
-          part.type === "tool-completeTask" &&
-          result?.action === "complete"
-        ) {
-          const match = tasks.find((t) =>
-            result.id ? t.id === result.id : t.title === result.title,
-          );
-          if (match && !match.completed) toggleTask(match.id);
-        }
-      }
-    }
-  }, [messages]); // eslint-disable-line react-hooks/exhaustive-deps
+  useToolActions({
+    messages,
+    tasks,
+    addTask,
+    toggleTask,
+  });
 
   const handleSend = async (text?: string) => {
     const value = text ?? input;
@@ -101,8 +80,11 @@ export default function Chat() {
 
   return (
     <div
-      className="w-full flex flex-col h-full bg-base-100 rounded-2xl shadow-lg overflow-hidden"
-      style={{ boxShadow: "0 8px 40px #9fa0c322, 0 2px 8px #8b687f11" }}
+      className="w-full flex flex-col h-full  rounded-2xl shadow-lg overflow-hidden"
+      style={{
+        boxShadow: "0 8px 40px #9fa0c322, 0 2px 8px #8b687f11",
+        background: "rgba(255,255,255,0.85)",
+      }}
       onDragOver={(e) => {
         e.preventDefault();
         setDragOver(true);
