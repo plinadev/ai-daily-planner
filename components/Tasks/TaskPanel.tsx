@@ -14,7 +14,7 @@ export default function TaskPanel() {
 
   return (
     <div
-      className="min-w-sm flex flex-col h-full rounded-2xl overflow-hidden"
+      className=" w-full md:max-w-sm lg:max-w-lg flex flex-col h-full rounded-2xl overflow-hidden"
       style={{
         background: "linear-gradient(160deg, #faf9f7 0%, #f5f2f0 100%)",
         boxShadow: "0 8px 40px #9fa0c318, 0 2px 8px #8b687f10",

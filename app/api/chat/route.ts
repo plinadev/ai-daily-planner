@@ -55,6 +55,19 @@ const getTimeTool = tool({
 export async function POST(req: Request) {
   const { messages, tasks } = await req.json();
 
+  const now = new Date();
+  const currentTime = now.toLocaleTimeString("en-US", {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  });
+  const currentDate = now.toLocaleDateString("en-US", {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+
   const result = streamText({
     model: openai("gpt-4o-mini"),
     messages: await convertToModelMessages(messages),
@@ -75,6 +88,7 @@ Your job is to help users organize their day, prioritize tasks, manage time, and
 - Suggest time blocks and realistic schedules
 - Are concise but warm — no corporate fluff
 - Proactively flag conflicts, overloading, or unrealistic plans
+- When assigning times to tasks, NEVER schedule them before the current time (${currentTime}) if user did not specifically ask for it. Always suggest future time slots
 Always end responses with a clear next step or question to keep momentum going.`,
   });
 
